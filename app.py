@@ -13,20 +13,22 @@ migrate = Migrate(app, db)
 
 from models import Sneaker
 
+
 @app.route("/")
 def hello():
   return "Welcome to Sneakers API!<br/>Endpoints:<br/> - GET /v1/sneakers<br/> - POST /v1/sneakers"
 
+
 @app.route("/v1/sneakers", methods=["POST"])
 def add_sneaker():
-  name=request.args.get('name')
-  brand=request.args.get('brand')
-  release_date=request.args.get('release_date')
+  name = request.args.get('name')
+  brand = request.args.get('brand')
+  release_date = request.args.get('release_date')
   try:
-    sneaker=Sneaker(
-      name=name,
-      brand=brand,
-      release_date=release_date
+    sneaker = Sneaker(
+        name=name,
+        brand=brand,
+        release_date=release_date
     )
     db.session.add(sneaker)
     db.session.commit()
@@ -34,10 +36,11 @@ def add_sneaker():
   except Exception as e:
     return(str(e))
 
+
 @app.route("/v1/sneakers", methods=["GET"])
 def get_all():
   try:
-    sneakers=Sneaker.query.all()
+    sneakers = Sneaker.query.all()
     return jsonify([s.serialize() for s in sneakers])
   except Exception as e:
     return(str(e))
@@ -49,6 +52,7 @@ def get_all():
 #     return jsonify(book.serialize())
 #   except Exception as e:
 #     return(str(e))
+
 
 if __name__ == '__main__':
   app.run()

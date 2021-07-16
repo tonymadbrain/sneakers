@@ -1,5 +1,6 @@
 from app import db
 
+
 class Sneaker(db.Model):
   __tablename__ = 'sneakers'
 
@@ -18,8 +19,8 @@ class Sneaker(db.Model):
 
   def serialize(self):
     return {
-      'id': self.id,
-      'name': self.name,
-      'brand': self.brand,
-      'release_date': self.release_date
+        'id': self.id,
+        'name': self.name,
+        'brand': self.brand,
+        'release_date': self.release_date
     }
