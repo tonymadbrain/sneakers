@@ -1,3 +1,5 @@
 [pycodestyle]
-indent-size = 2
 ignore = E402
+indent-size = 2
+max-line-length = 120
+
