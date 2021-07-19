@@ -1,31 +1,84 @@
 # Sneakers
 
-Attention! This repository was created for educational purposes. I'm not responsible. Don't try to use it!
+Attention! This repository was created for educational purposes. I'm not responsible for anything. Don't try to use it!
 
 API with sneakers
 
-tech:
-* flask
-* postgresql
-
-## Endpoints
-
-* /v1/sneakers
-* /v1/sneakers/nike
-* /v1/sneakers/nike/{sneaker_id}
+stack:
+- flask
+- postgresql
 
 ## TODO
 
-* tests
-* database loading
-* /v1/brands
-* paging
-* limit
-* sort
-* POST with JSON?
-* manage.py useless?
+- [ ] tests
+- [ ] errors
+- [x] database loading
+- [ ] /v1/brands
+- [ ] paging
+- [ ] limit & offset
+- [ ] sort
+- [ ] CRUD?
+- [ ] manage.py useless?
+- [ ] Limiting which fields are returned by the API
+
+## Endpoints
+
+- /v1/sneakers
+- /v1/sneakers/{sneaker_id}
+
+## First run
+
+Install dependecies:
+
+```Bash
+pipenv install
+```
+
+Create PostgreSQL database:
+
+```Bash
+CREATE DATABASE sneakers
+```
+
+Set up database:
+
+```Bash
+export APP_SETTINGS="config.DevelopmentConfig"
+export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers"
+flask db init
+flask db migrate
+flask db upgrade
+```
+
+Create `.env` file:
+
+```Ini
+export APP_SETTINGS="config.DevelopmentConfig"
+export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers"
+export FLASK_ENV=development
+```
+
+Run Flask app:
+
+```Bash
+pipenv run flask run
+```
+
+Warm-up to create a table/schema:
+
+```Bash
+curl 'http://127.0.0.1:5000/v1/sneakers'
+```
+
+Run db_loader.py to populate database:
+
+```Bash
+pipenv run python db_loader.py
+```
 
 ## Data load
+
+Script `db_loader.py` populates database from this dataset automatically. To manually look at the data:
 
 ```Bash
 curl -so thesneakerdatabase-nike.json 'https://www.thesneakerdatabase.com/api/getData?brand=Nike' \
@@ -47,16 +100,4 @@ curl -so thesneakerdatabase-nike.json 'https://www.thesneakerdatabase.com/api/ge
 
 cat thesneakerdatabase-nike.json| jq -r '.data[0]'
 cat thesneakerdatabase-nike.json| jq -r '.data | length'
-```
-
-## Database
-
-```Bash
-CREATE DATABASE sneakers
-export APP_SETTINGS="config.DevelopmentConfig"
-export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers"
-flask db init
-flask db migrate
-flask db upgrade
-curl -X POST 'http://127.0.0.1:5000/v1/sneakers?name=Nike%20Free%20Run%20Trail%20Black%20Anthracite&brand=Nike&release_date=2021-08-01'
 ```
