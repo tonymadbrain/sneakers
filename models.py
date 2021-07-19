@@ -1,18 +1,26 @@
-from app import db
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
-class Sneaker(db.Model):
+class Sneaker(Base):
+  '''
+      description: Sneaker description
+  '''
   __tablename__ = 'sneakers'
 
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String())
-  brand = db.Column(db.String())
-  release_date = db.Column(db.String())
+  id = Column(Integer, primary_key=True)
+  name = Column(String())
+  brand = Column(String())
+  release_date = Column(String())
+  sku = Column(String())
 
-  def __init__(self, name, brand, release_date):
+  def __init__(self, name, brand, release_date, sku):
     self.name = name
     self.brand = brand
     self.release_date = release_date
+    self.sku = sku
 
   def __repr__(self):
     return '<id {}>'.format(self.id)
@@ -22,5 +30,6 @@ class Sneaker(db.Model):
         'id': self.id,
         'name': self.name,
         'brand': self.brand,
-        'release_date': self.release_date
+        'release_date': self.release_date,
+        'sku': self.sku
     }

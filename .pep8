@@ -1,5 +1,5 @@
 [pycodestyle]
-ignore = E402
+; ignore = E402 ; move imports to top
 indent-size = 2
 max-line-length = 120
 
