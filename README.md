@@ -20,6 +20,9 @@ stack:
 - [ ] CRUD?
 - [ ] manage.py useless?
 - [ ] Limiting which fields are returned by the API
+- [ ] containers
+- [ ] ci/cd pipeline
+- [ ] bulk insert to db session.bulk_save_objects([cookiemon, cakeeater, pieperson])
 
 ## Endpoints
 
@@ -45,9 +48,9 @@ Set up database:
 ```Bash
 export APP_SETTINGS="config.DevelopmentConfig"
 export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers"
-flask db init
-flask db migrate
-flask db upgrade
+pipenv run flask db init
+pipenv run flask db migrate
+pipenv run flask db upgrade
 ```
 
 Create `.env` file:

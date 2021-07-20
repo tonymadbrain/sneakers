@@ -5,22 +5,12 @@ from flask_migrate import Migrate
 from models import Base, Sneaker
 
 app = Flask("Sneakers API")
-
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-# https://github.com/pallets/flask-sqlalchemy/issues/98
-# db.register_base(Base)
 
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
 migrate = Migrate(app, db)
-
-
-@app.before_first_request
-def setup():
-  # Recreate database each time for demo
-  # Base.metadata.drop_all(bind=db.engine)
-  Base.metadata.create_all(bind=db.engine)
-  db.session.commit()
 
 
 @app.route("/")
