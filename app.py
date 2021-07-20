@@ -30,8 +30,11 @@ def get_all():
 @app.route("/v1/sneakers/<id_>")
 def get_by_id(id_):
   try:
-    sneaker = db.session.query(Sneaker).filter_by(id=id_).first()
-    return jsonify(sneaker.serialize())
+    sneaker = db.session.query(Sneaker).filter_by(id=id_).one_or_none()
+    if sneaker:
+      return jsonify(sneaker.serialize())
+    else:
+      return "{}", 404
   except Exception as e:
     return(str(e))
 

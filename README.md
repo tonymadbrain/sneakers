@@ -23,6 +23,7 @@ stack:
 - [ ] containers
 - [ ] ci/cd pipeline
 - [ ] bulk insert to db session.bulk_save_objects([cookiemon, cakeeater, pieperson])
+- [ ] generate any count of sneakers by fake factory in tests
 
 ## Endpoints
 
@@ -77,6 +78,22 @@ Run db_loader.py to populate database:
 
 ```Bash
 pipenv run python db_loader.py
+```
+
+## Testing
+
+Create `.env.test` file:
+
+```Ini
+export APP_SETTINGS="config.TestingConfig"
+export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers-test"
+export FLASK_ENV=test
+```
+
+Run tests witch command:
+
+```Bash
+pipenv run python -m unittest tests/test_get_sneakers.py
 ```
 
 ## Data load
