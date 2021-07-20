@@ -10,9 +10,9 @@ stack:
 
 ## TODO
 
-- [ ] tests
-- [ ] errors
+- [x] tests
 - [x] database loading
+- [ ] errors
 - [ ] /v1/brands
 - [ ] paging
 - [ ] limit & offset
@@ -24,6 +24,7 @@ stack:
 - [ ] ci/cd pipeline
 - [ ] bulk insert to db session.bulk_save_objects([cookiemon, cakeeater, pieperson])
 - [ ] generate any count of sneakers by fake factory in tests
+- [ ] tests coverage > 90%
 
 ## Endpoints
 
