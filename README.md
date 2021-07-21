@@ -100,7 +100,7 @@ export PIPENV_DOTENV_LOCATION=.env.test
 Run tests witch command:
 
 ```Bash
-pipenv run python -m unittest tests/test_get_sneakers.py
+pipenv run pytest
 ```
 
 ## Data load
