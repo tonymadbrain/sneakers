@@ -91,10 +91,16 @@ export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers-test
 export FLASK_ENV=test
 ```
 
+Change env config:
+
+```Bash
+export PIPENV_DOTENV_LOCATION=.env.test
+```
+
 Run tests witch command:
 
 ```Bash
-pipenv run python -m unittest tests/test_get_sneakers.py
+pipenv run pytest
 ```
 
 ## Data load
