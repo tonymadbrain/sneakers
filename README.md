@@ -32,8 +32,8 @@ stack:
 
 ## Endpoints
 
-- /v1/sneakers
-- /v1/sneakers/{sneaker_id}
+- /v1/sneakers [GET,POST]
+- /v1/sneakers/{sneaker_id} [GET]
 
 ## Responses
 
@@ -103,6 +103,12 @@ Change env config and run tests witch command:
 
 ```Bash
 PIPENV_DOTENV_LOCATION=.env.test pipenv run pytest
+```
+
+## Create new Sneaker
+
+```Bash
+curl -X POST 'http://127.0.0.1:5000/v1/sneakers' -d '{ "sku": "ABC123", "brand": "Nike", "name": "Nike Super Waffle", "colorway": "White", "gender": "men", "release_year": 2099, "release_date": "2099-01-01", "retail_price": 100, "estimated_market_value": 0, "story": "", "image": { "original": "none at the moment", "small":"none at the moment", "thumbnail": "none at the moment" }, "links": { "stockx": "none at the moment", "goat": "none at the moment", "flight_club": "none at the moment" } }' -H 'Content-Type: application/json'
 ```
 
 ## Data load
