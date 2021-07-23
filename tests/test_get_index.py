@@ -13,3 +13,11 @@ def test_nonexistent(client):
   expected = {'items': [], 'errors': ['Not found']}
   assert response.status_code == 404
   assert response.json == expected
+
+
+def test_not_allowed(client):
+  response = client.post('/')
+
+  expected = {'items': [], 'errors': ['Method not allowed']}
+  assert response.status_code == 405
+  assert response.json == expected

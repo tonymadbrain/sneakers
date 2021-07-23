@@ -12,7 +12,7 @@ stack:
 
 - [x] tests
 - [x] database loading
-- [ ] errors
+- [x] errors
 - [ ] /v1/brands
 - [ ] paging
 - [ ] limit & offset
@@ -27,6 +27,8 @@ stack:
 - [ ] tests coverage > 90%
 - [ ] X-Total-Count, Link, Content-Range headers, has_more field?
 - [ ] How to test 500 error?
+- [ ] auth?
+- [ ] non json requests
 
 ## Endpoints
 

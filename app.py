@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.exceptions import HTTPException
-from models import Base, Sneaker
+from models import Base, Sneaker, Image, Link, Source
 
 # App init
 app = Flask("Sneakers API")
@@ -24,9 +24,14 @@ def page_not_found(e):
   return jsonify(response), 404
 
 
+@app.errorhandler(405)
+def method_not_allowed(e):
+  response = {'items': [], 'errors': ['Method not allowed']}
+  return jsonify(response), 405
+
+
 @app.errorhandler(500)
 def internal_server_error(e):
-  # note that we set the 500 status explicitly
   response = {'items': [], 'errors': ['Internal server error']}
   return jsonify(response), 500
 
@@ -46,15 +51,16 @@ def internal_server_error(e):
 #   return response
 
 
-@app.errorhandler(Exception)
-def handle_exception(e):
-  # pass through HTTP errors
-  if isinstance(e, HTTPException):
-    return e
+# @app.errorhandler(Exception)
+# def handle_exception(e):
+#   # pass through HTTP errors
+#   if isinstance(e, HTTPException):
+#     return e
 
-  # now you're handling non-HTTP exceptions only
-  response = {'items': [], 'errors': ['Internal server error']}
-  return jsonify(response), 500
+#   print(f"Unexpected error: { str(e) }")
+#   # now you're handling non-HTTP exceptions only
+#   response = {'items': [], 'errors': ['Internal server error']}
+#   return jsonify(response), 500
 
 
 # Routes
@@ -71,6 +77,53 @@ def get_all():
       'errors': []
   }
   return jsonify(response)
+
+
+@app.route("/v1/sneakers", methods=["POST"])
+def post():
+  response = {
+      'items': [],
+      'errors': []
+  }
+
+  source = db.session.query(Source).filter_by(name='Sneaker API').one_or_none()
+  if not source:
+    source = Source(
+        name='Sneakers API'
+    )
+    try:
+      db.session.add(source)
+      db.session.commit()
+    except Exception as e:
+      db.session.rollback()
+      raise e
+
+  body = request.get_json()
+  image_body = body.pop('image')
+  links_body = body.pop('links')
+  try:
+    image = Image(**image_body)
+    links = Link(**links_body)
+    db.session.commit()
+    sneaker = Sneaker(**body, image=image, links=links, source=source)
+    db.session.commit()
+    sneaker.id_in_source = sneaker.id
+    db.session.commit()
+    response['items'].append({'id': sneaker.id})
+    return jsonify(response), 201
+  except TypeError as e:
+    db.session.rollback()
+    response['errors'].append('Wrong fields')
+    response['errors'].append(str(e))
+    return jsonify(response), 400
+  # except (FieldDoesNotExist, ValidationError):
+  #   raise SchemaValidationError
+  # except NotUniqueError:
+  #   raise MovieAlreadyExistsError
+  except Exception as e:
+    # raise InternalServerError
+    db.session.rollback()
+    raise e
 
 
 @app.route("/v1/sneakers/<id_>")

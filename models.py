@@ -32,7 +32,7 @@ class Sneaker(Base):
     super(Sneaker, self).__init__(**kwargs)
 
   def __repr__(self):
-    return '<id {}>'.format(self.id)
+    return f"<id { self.id }, name { self.name }, sku { self.sku }, id_in_source { self.id_in_source }>"
 
   def serialize(self):
     return {
