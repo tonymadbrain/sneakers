@@ -5,3 +5,11 @@ def test_index(client):
 
   assert response.status_code == 200
   assert expected == response.get_data(as_text=True)
+
+
+def test_nonexistent(client):
+  response = client.get('/nonexistent_endpoint')
+
+  expected = {'items': [], 'errors': ['Not found']}
+  assert response.status_code == 404
+  assert response.json == expected

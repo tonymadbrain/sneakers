@@ -25,11 +25,17 @@ stack:
 - [ ] bulk insert to db session.bulk_save_objects([cookiemon, cakeeater, pieperson])
 - [ ] generate any count of sneakers by fake factory in tests
 - [ ] tests coverage > 90%
+- [ ] X-Total-Count, Link, Content-Range headers, has_more field?
+- [ ] How to test 500 error?
 
 ## Endpoints
 
 - /v1/sneakers
 - /v1/sneakers/{sneaker_id}
+
+## Responses
+
+Almost every API response contains two top-level fields: items and errors. Each of them is an array, which can contain 0 or more items.
 
 ## First run
 
@@ -91,16 +97,10 @@ export DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/sneakers-test
 export FLASK_ENV=test
 ```
 
-Change env config:
+Change env config and run tests witch command:
 
 ```Bash
-export PIPENV_DOTENV_LOCATION=.env.test
-```
-
-Run tests witch command:
-
-```Bash
-pipenv run pytest
+PIPENV_DOTENV_LOCATION=.env.test pipenv run pytest
 ```
 
 ## Data load
