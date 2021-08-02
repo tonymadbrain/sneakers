@@ -102,7 +102,7 @@ export FLASK_ENV=test
 Change env config and run tests witch command:
 
 ```Bash
-PIPENV_DOTENV_LOCATION=.env.test pipenv run pytest
+make test
 ```
 
 ## Create new Sneaker
